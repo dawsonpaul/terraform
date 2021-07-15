@@ -5,3 +5,4 @@
 .backup
 .old
 .hcl
+*lock*
