@@ -2,6 +2,19 @@ provider "aws" {
   region = "us-east-2"
 }
 
+terraform {
+  backend "s3" {
+    # Replace this with your bucket name!
+    bucket         = "pd-lab-terraformbucket"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-2"
+
+    # Replace this with your DynamoDB table name!
+    dynamodb_table = "pd-lab-dynamodb-lock"
+    encrypt        = true
+  }
+}
+
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "pd-lab-terraformbucket"
   lifecycle {
