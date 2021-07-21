@@ -24,7 +24,7 @@ data "aws_subnet_ids" "default" {
 
 resource "aws_launch_configuration" "example" {
   image_id        = "ami-0c55b159cbfafe1f0"
-  instance_type   = "t2.micro"
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
 
   # user_data = data.template_file.user_data.rendered
@@ -41,8 +41,8 @@ resource "aws_autoscaling_group" "example" {
   vpc_zone_identifier  = data.aws_subnet_ids.default.ids
   target_group_arns = [aws_lb_target_group.asg.arn]
   health_check_type = "ELB"
-  min_size = 5
-  max_size = 10
+  min_size = var.min_size
+  max_size = var.max_size
 
   tag {
     key                 = "Name"
