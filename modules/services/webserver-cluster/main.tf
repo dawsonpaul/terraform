@@ -11,15 +11,15 @@ data "aws_subnet_ids" "default" {
 }
 
 
-# data "template_file" "user_data" {
-#   template = file("../../../modules/services/webserver-cluster/user-data.sh")
+data "template_file" "user_data" {
+  template = file("../../../modules/services/webserver-cluster/user-data.sh")
 
-#   vars = {
-#     server_port = var.server_port
-#     db_address  = data.terraform_remote_state.db.outputs.address
-#     db_port     = data.terraform_remote_state.db.outputs.port
-#   }
-# }
+  vars = {
+    server_port = var.server_port
+    db_address  = data.terraform_remote_state.db.outputs.address
+    db_port     = data.terraform_remote_state.db.outputs.port
+  }
+}
 
 
 resource "aws_launch_configuration" "example" {
@@ -27,7 +27,7 @@ resource "aws_launch_configuration" "example" {
   instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
 
-  # user_data = data.template_file.user_data.rendered
+  user_data = data.template_file.user_data.rendered
 
   # Required when using a launch configuration with an auto scaling group.
   # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html
