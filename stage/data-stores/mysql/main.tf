@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_db_instance" "example" {
-  identifier_prefix   = "pd-terraform-lab-"
+  identifier_prefix   = "stage-pd-terraform-lab-"
   engine              = "mysql"
   allocated_storage   = 10
   instance_class      = "db.t2.micro"
