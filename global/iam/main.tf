@@ -3,6 +3,14 @@ provider "aws" {
 }
 
 resource "aws_iam_user" "example" {
-    count = 3
-    name = "dawson.${count.index}"
+  for_each = toset(var.user_names)
+  name     = each.value
+}
+
+output "all_users" {
+  value = aws_iam_user.example
+}
+
+output "all_arns" {
+  value = values(aws_iam_user.example)[*].arn
 }
